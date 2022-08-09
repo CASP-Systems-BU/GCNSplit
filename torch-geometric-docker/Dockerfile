@@ -10,6 +10,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils gnupg
     apt-get purge --autoremove -y curl && \
 rm -rf /var/lib/apt/lists/*
 
+# https://github.com/NVIDIA/nvidia-docker/issues/1631
+RUN apt-key del 7fa2af80
+RUN apt-key del 3bf863cc
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+RUN apt-get update && apt-get install
+
 ENV CUDA_VERSION 10.1.243
 ENV NCCL_VERSION 2.4.8
 ENV CUDA_PKG_VERSION 10-1=$CUDA_VERSION-1
@@ -111,8 +118,8 @@ ENV PATH=$CONDA_PREFIX/bin:$PATH
 # CUDA 10.0-specific steps.
 RUN conda install -y -c pytorch \
     cudatoolkit=10.1 \
-    "pytorch=1.4.0=py3.6_cuda10.1.243_cudnn7.6.3_0" \
-    torchvision=0.5.0=py36_cu101 \
+    "pytorch=1.5.0=py3.6_cuda10.1.243_cudnn7.6.3_0" \
+    torchvision=0.6.0=py36_cu101 \
  && conda clean -ya
 
 # Install HDF5 Python bindings.
@@ -144,10 +151,10 @@ RUN CPATH=/usr/local/cuda/include:$CPATH \
  && LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH \
  && DYLD_LIBRARY_PATH=/usr/local/cuda/lib:$DYLD_LIBRARY_PATH
 
-RUN pip install torch-scatter==latest+cu101 -f https://pytorch-geometric.com/whl/torch-1.4.0.html \
- && pip install torch-sparse==latest+cu101 -f https://pytorch-geometric.com/whl/torch-1.4.0.html \
- && pip install torch-cluster==latest+cu101 -f https://pytorch-geometric.com/whl/torch-1.4.0.html \
- && pip install torch-spline-conv==latest+cu101 -f https://pytorch-geometric.com/whl/torch-1.4.0.html \
+RUN pip install torch-scatter==2.0.5 -f https://pytorch-geometric.com/whl/torch-torch-1.5.0+cu101.html \
+ && pip install torch-sparse==0.6.3 -f https://pytorch-geometric.com/whl/torch-torch-1.5.0+cu101.html \
+ && pip install torch-cluster==1.5.4 -f https://pytorch-geometric.com/whl/torch-torch-1.5.0+cu101.html \
+ && pip install torch-spline-conv==1.2.0 -f https://pytorch-geometric.com/whl/torch-torch-1.5.0+cu101.html \
  && pip install torch-geometric
 
 # Set the default command to python3.
