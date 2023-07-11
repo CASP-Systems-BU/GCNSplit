@@ -1,3 +1,19 @@
+# GCNSplit: Bounding the State of Streaming Graph Partitioning
+
+This repository includes the implementation of the GCNSplit algorithm for partitioning unbounded streaming graphs. GCNSplit is described in the [aiDM'22 paper](https://dl.acm.org/doi/pdf/10.1145/3533702.3534920) by Michał Zwolak, Zainab Abbas, Sonia Horchidan, Paris Carbone, and Vasiliki Kalavri.
+
+You can cite the paper using the BibTeX below:
+
+```
+@inproceedings{zwolak2022gcnsplit,
+  title={GCNSplit: bounding the state of streaming graph partitioning},
+  author={Zwolak, Micha{\l} and Abbas, Zainab and Horchidan, Sonia and Carbone, Paris and Kalavri, Vasiliki},
+  booktitle={Proceedings of the Fifth International Workshop on Exploiting Artificial Intelligence Techniques for Data Management},
+  pages={1--12},
+  year={2022}
+}
+```
+
 ### Container configuration
 
 To run in docker container:
